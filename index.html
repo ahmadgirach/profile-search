@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Watch GitHub Profile</title>
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    </script>
+    <style>
+        body {
+            margin-top: 50px;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .card {
+            width: 25em;
+            height: 16em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            GitHub Username:
+            <div class="col-md-3">
+                <input type="text" id="user_name" class="form-control"/><br/>
+            </div>
+        </div>
+        <br/>
+        <div id="view_profile" class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <img id="avatar" class="card-img-top rounded" src="..." alt="This should be avatar"/>
+                <p id="bio"></p>
+                <p id="location"></p>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p id="repos"></p>
+                        <p id="followers"></p>
+                        <p id="following"></p>
+                        <a id="url" href="#" class="btn btn-primary btn-sm" target="new">Visit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+            var $profile = $('#view_profile'),
+                $user_name = $('#user_name');
+
+            $profile.hide();
+            $user_name.focus();
+
+            $user_name.on('keyup', function(e) {
+                if(e.which == 13) {
+                    $.ajax({
+                        'url': 'https://api.github.com/users/' + $user_name.val(),
+                        'method': 'GET',
+                        'type': 'http'
+                    })
+                    .then(function(result) {
+                        if(result) {
+                            $('#avatar').attr('src', result.avatar_url);
+                            $('#url').attr('href', result.html_url);
+                            $('#bio').text(result.bio);
+                            $('#location').text(result.location);
+                            $('#repos').text("Public Repos: " + result.public_repos);
+                            $('#followers').text("Followers: " + result.followers);
+                            $('#following').text("Following: " + result.following);
+                            $profile.show();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
