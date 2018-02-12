@@ -1,0 +1,9 @@
+body {
+    margin-top: 50px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.card {
+    width: 25em;
+    height: 16em;
+}

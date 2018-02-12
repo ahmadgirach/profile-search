@@ -8,20 +8,10 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
+    <script src="static/src/js/script.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    </script>
-    <style>
-        body {
-            margin-top: 50px;
-            font-family: 'Ubuntu', sans-serif;
-        }
-
-        .card {
-            width: 25em;
-            height: 16em;
-        }
-    </style>
+    <link rel="stylesheet" href="static/src/css/style.css">
 </head>
 
 <body>
@@ -31,6 +21,9 @@
             GitHub Username:
             <div class="col-md-3">
                 <input type="text" id="user_name" class="form-control"/><br/>
+            </div>
+            <div class="col-md-3">
+                <button id="clear" class="btn btn-primary btn-lg">Clear</button>
             </div>
         </div>
         <br/>
@@ -53,37 +46,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $(function() {
-            var $profile = $('#view_profile'),
-                $user_name = $('#user_name');
-
-            $profile.hide();
-            $user_name.focus();
-
-            $user_name.on('keyup', function(e) {
-                if(e.which == 13) {
-                    $.ajax({
-                        'url': 'https://api.github.com/users/' + $user_name.val(),
-                        'method': 'GET',
-                        'type': 'http'
-                    })
-                    .then(function(result) {
-                        if(result) {
-                            $('#avatar').attr('src', result.avatar_url);
-                            $('#url').attr('href', result.html_url);
-                            $('#bio').text(result.bio);
-                            $('#location').text(result.location);
-                            $('#repos').text("Public Repos: " + result.public_repos);
-                            $('#followers').text("Followers: " + result.followers);
-                            $('#following').text("Following: " + result.following);
-                            $profile.show();
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
