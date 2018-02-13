@@ -1,13 +1,28 @@
 $(function() {
+
     const $profile = $('#view_profile'),
         $user_name = $('#user_name'),
-        $clear = $('#clear');
+        $clear = $('#clear'),
+        $progress = $('#progress');
 
-    $profile.hide();
+    let enterHasBeenPressed = false;
+
     $user_name.focus();
+    $profile.hide();
+    $progress.hide();
 
     $user_name.on('keyup', (e) => {
+        if(enterHasBeenPressed) {
+            $profile.hide();
+        }
         if(e.which == 13) {
+            enterHasBeenPressed = true;
+            $progress.show();
+            setTimeout(function() {
+                $progress.hide();
+                $profile.show();
+            }, 3000);
+
             $.ajax({
                 'url': 'https://api.github.com/users/' + $user_name.val(),
                 'method': 'GET',
@@ -22,7 +37,6 @@ $(function() {
                     $('#repos').text("Public Repos: " + result.public_repos);
                     $('#followers').text("Followers: " + result.followers);
                     $('#following').text("Following: " + result.following);
-                    $profile.show();
                 }
             });
         }

@@ -1,9 +1,23 @@
 body {
     margin-top: 50px;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Oxygen', sans-serif;
 }
 
 .card {
     width: 25em;
     height: 16em;
+}
+
+.progress-bar {
+    width: 0;
+    animation: progress 3s;
+}
+
+@keyframes progress {
+    from {
+        width: 0;
+    }
+    to {
+        width: 175px;
+    }
 }
