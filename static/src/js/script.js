@@ -11,14 +11,21 @@ $(function() {
     $profile.hide();
     $progress.hide();
 
-    $user_name.on('keyup', (e) => {
+    $user_name.on('keyup', e => {
         if(enterHasBeenPressed) {
             $profile.hide();
         }
+
         if(e.which == 13) {
+            if(!$('#user_name').val()) {
+                alert("Oh No! You should at least type a Username!");
+                return;
+            }
+
             enterHasBeenPressed = true;
             $progress.show();
-            setTimeout(function() {
+
+            setTimeout(() => {
                 $progress.hide();
                 $profile.show();
             }, 3000);
